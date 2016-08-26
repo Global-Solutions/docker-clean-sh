@@ -8,6 +8,14 @@ else
   echo "NO DANGLING CONTAINERS" $DANGLING_CONTS
 fi
 
+echo "-- REMOVE DANGLING VOLUMES --"
+DANGLING_VOLS=`docker volume ls -q -f dangling=true`
+if [ -n "$DANGLING_VOLS" ]; then
+  docker volume rm $DANGLING_VOLS
+else
+  echo "NO DANGLING VOLUMES" $DANGLING_VOLS
+fi
+
 echo "-- REMOVE DANGLING IMAGES --"
 DANGLING_IMGS=`docker images -q -f dangling=true`
 if [ -n "$DANGLING_IMGS" ]; then
